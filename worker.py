@@ -1,5 +1,3 @@
-from import_file import parse_data
-
 class WorkerQueue:
     def __init__(self):
         self.queue = []
@@ -21,14 +19,6 @@ class WorkerQueue:
         pass
             
 
-value = './static/mls002/feed.json'
-data_type = 'agents'
-test = WorkerQueue()
-print(test.length)
-print(test.remove())
-test.insert(value, data_type)
-print(test.length)
-print(test.length)
 
 
 
