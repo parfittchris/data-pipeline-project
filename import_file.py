@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 
 def parse_data(location, data_type):
     packet = []
-
+    
     try:
         with open(location, 'r') as input_file:
             if location.endswith('.json'):
@@ -14,7 +14,7 @@ def parse_data(location, data_type):
                 for item in data:
                     new_item = {}
 
-                    new_item['type'] = 'agents'
+                    new_item['data_type'] = 'agents'
                     new_item['name'] = item['agent_name']
                     new_item['agent_code'] = item['agent_code']
                     new_item['phone'] = item['office_phone']
@@ -51,7 +51,7 @@ def parse_data(location, data_type):
                         new_item['city'] = city
                         new_item['state'] = state
                         new_item['zip'] = zip_code
-                        new_item['mls'] = mls
+                        new_item['mls_number'] = mls
                         new_item['price'] = price
                         new_item['status'] = status
                         new_item['type'] = listing_type
@@ -91,7 +91,7 @@ def parse_data(location, data_type):
                     new_item['city'] = address[1].text
                     new_item['state'] = address[3].text
                     new_item['zip'] = address[0].text
-                    new_item['mls'] = listing[6].text
+                    new_item['mls_number'] = listing[6].text
                     new_item['price'] = listing[0].text
                     new_item['status'] = listing[2].text
                     new_item['type'] = listing[7].text

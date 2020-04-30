@@ -1,3 +1,5 @@
+from import_file import parse_data
+
 class WorkerQueue:
     def __init__(self):
         self.queue = []

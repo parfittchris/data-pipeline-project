@@ -6,6 +6,9 @@ import os
 import import_file
 from worker import WorkerQueue
 
+# TURN INTO CLASS
+
+
 #  Init App
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -28,10 +31,8 @@ Offices = Base.classes.offices
 
 
 # Methods to populate db
-# CHECK IF ITEM ALREADY EXISTS IN DB
 
 def addAgent(agent):
-
         # Verify Agent doesn't already exist in db
         current = db.session.query(Agents).filter(Agents.agent_code == agent['agent_code']).first()
 
@@ -95,6 +96,23 @@ def addOffice(office):
         db.session.commit()
         return
 
+
+def enterData():
+    results = queue.remove()
+
+    for item in results:
+        if item['data_type'] == 'agents':
+            addAgent(item)
+        elif item['data_type'] == 'listings':
+            addListing(item)
+        elif item['data_type'] == 'offices':
+            addOffice(item)
+    
+    return 'Data entered successfully'
+
+def importData(location, data_type):
+    queue.insert(location, data_type)
+
 # Routes
 @app.route('/deleteAll', methods=['GET'])
 def index():
@@ -104,46 +122,52 @@ def index():
     db.session.commit()
     return ''
 
+# test_agent = {
+#         'type': 'agents',
+#         'name': 'Lego man',
+#         'agent_code': '777',
+#         'phone': '12345678',
+#         'city': 'Burlington',
+#         'state': 'Vermont',
+#         'zip': '05456'
+#     }
 
-test_agent = {
-        'type': 'agents',
-        'name': 'Batman',
-        'agent_code': '777',
-        'phone': '12345678',
-        'city': 'Burlington',
-        'state': 'Vermont',
-        'zip': '05456'
-    }
+# test_office = {
+#         'type': 'offices',
+#         'name': 'Pam Stuff',
+#         'office_code': '456',
+#         'phone': '12345678',
+#         'city': 'Burlington',
+#         'state': 'Vermont',
+#         'zip': '05456'
+# }
 
-test_office = {
-        'type': 'offices',
-        'name': 'The end of the world Office',
-        'office_code': '123',
-        'phone': '12345678',
-        'city': 'Burlington',
-        'state': 'Vermont',
-        'zip': '05456'
-}
+# test_listing = {
+#         'type': 'listings',
+#         'address': 'Steeple Chase',
+#         'city': 'Harvard',
+#         'state': 'Vermont',
+#         'zip': '05456',
+#         'mls_number': '123',
+#         'price': '234324',
+#         'status': 'for rent',
+#         'description': 'It\'s great!',
+#         'agent_id': 123432,
+#         'office_id': 37492
+# }
 
-test_listing = {
-        'type': 'listings',
-        'address': '123 Main Steet',
-        'city': 'Harvard',
-        'state': 'Vermont',
-        'zip': '05456',
-        'mls_number': '777',
-        'price': '234324',
-        'status': 'for rent',
-        'description': 'It\'s great!',
-        'agent_id': 123432,
-        'office_id': 37492
-}
+
+source = './static/mls003/offices.csv'
+data = 'offices'
+
+# importData(source, data)
+# enterData()
 
 # addAgent(test_agent)
 # addListing(test_listing)
-addOffice(test_office)
+# addOffice(test_office)
 
 
 # Run Server
-# if __name__ == '__main__':
-#     app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True)
