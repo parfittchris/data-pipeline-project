@@ -50,7 +50,8 @@ def parse_data(location):
 
         elif location.endswith('.csv'):
             reader = csv.reader(input_file)
-            
+            next(reader)
+
             if 'office' in location:
                 for name, office_code, phone, city, state, zip_code in reader:
                     new_item = {}
@@ -126,16 +127,16 @@ def parse_data(location):
 
                 new_agent['data_type'] = 'agents'
                 new_agent['name'] = str(agent[2])
-                new_agent['agent_code'] = str(agent[0])
-                new_agent['phone'] = str(agent[1])
+                new_agent['agent_code'] = str(agent[0].text)
+                new_agent['phone'] = str(agent[1].text)
                 new_agent['city'] = str(address[1].text)
                 new_agent['state'] = str(address[3].text)
                 new_agent['zip'] = str(address[0].text)
 
                 new_office['data_type'] = 'offices'
-                new_office['name'] = str(broker[2])
-                new_office['office_code'] = str(broker[0])
-                new_office['phone'] = str(broker[1])
+                new_office['name'] = str(broker[2].text)
+                new_office['office_code'] = str(broker[0].text)
+                new_office['phone'] = str(broker[1].text)
                 new_office['city'] = str(address[1].text)
                 new_office['state'] = str(address[3].text)
                 new_office['zip'] = str(address[0].text)
@@ -146,5 +147,4 @@ def parse_data(location):
 
 
     return packet
-
 
