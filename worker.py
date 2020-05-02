@@ -5,8 +5,8 @@ class WorkerQueue:
         self.queue = []
         self.length = 0
 
-    def insert(self, value, data_type):
-        data_results = parse_data(value, data_type)
+    def insert(self, value):
+        data_results = parse_data(value)
         self.queue.append(data_results)
         self.length += 1
 
