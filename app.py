@@ -25,7 +25,7 @@ def startApp():
 
     while queue.length > 0:
         database.enterData(queue)
-        print('Enterting data...')
+        print('Entering data...')
         time.sleep(2)
 
     print('Successful Import')

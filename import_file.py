@@ -1,6 +1,7 @@
 import csv
 import json
 import xml.etree.ElementTree as ET
+import re
 
 def parse_data(location):
     packet = []
@@ -30,7 +31,7 @@ def parse_data(location):
                 new_agent['data_type'] = 'agents'
                 new_agent['name'] = str(item['agent_name'])
                 new_agent['agent_code'] = str(item['agent_code'])
-                new_agent['phone'] = str(item['office_phone'])
+                new_agent['phone'] = translateNum(str(item['office_phone']))
                 new_agent['city'] = str(item['city'])
                 new_agent['state'] = str(item['state'])
                 new_agent['zip'] = str(item['zip'])
@@ -38,7 +39,7 @@ def parse_data(location):
                 new_office['data_type'] = 'offices'
                 new_office['name'] = str(item['office_name'])
                 new_office['office_code'] = str(item['office_code'])
-                new_office['phone'] = str(item['office_phone'])
+                new_office['phone'] = translateNum(str(item['office_phone']))
                 new_office['city'] = str(item['city'])
                 new_office['state'] = str(item['state'])
                 new_office['zip'] = str(item['zip'])
@@ -59,7 +60,7 @@ def parse_data(location):
                     new_item['data_type'] = 'offices'
                     new_item['name'] = str(name)
                     new_item['office_code'] = str(office_code)
-                    new_item['phone'] = str(phone)
+                    new_item['phone'] = translateNum(str(phone))
                     new_item['city'] = str(city)
                     new_item['state'] = str(state)
                     new_item['zip'] = str(zip_code)
@@ -73,7 +74,7 @@ def parse_data(location):
                     new_item['data_type'] = 'agents'
                     new_item['name'] = str(name)
                     new_item['agent_code'] = str(agent_code)
-                    new_item['phone'] = str(phone)
+                    new_item['phone'] = translateNum(str(phone))
                     new_item['city'] = str(city)
                     new_item['state'] = str(state)
                     new_item['zip'] = str(zip_code)
@@ -128,7 +129,7 @@ def parse_data(location):
                 new_agent['data_type'] = 'agents'
                 new_agent['name'] = str(agent[2])
                 new_agent['agent_code'] = str(agent[0].text)
-                new_agent['phone'] = str(agent[1].text)
+                new_agent['phone'] = translateNum(str(agent[1].text))
                 new_agent['city'] = str(address[1].text)
                 new_agent['state'] = str(address[3].text)
                 new_agent['zip'] = str(address[0].text)
@@ -136,7 +137,7 @@ def parse_data(location):
                 new_office['data_type'] = 'offices'
                 new_office['name'] = str(broker[2].text)
                 new_office['office_code'] = str(broker[0].text)
-                new_office['phone'] = str(broker[1].text)
+                new_office['phone'] = translateNum(str(broker[1].text))
                 new_office['city'] = str(address[1].text)
                 new_office['state'] = str(address[3].text)
                 new_office['zip'] = str(address[0].text)
@@ -147,4 +148,15 @@ def parse_data(location):
 
 
     return packet
+
+
+# Ensures each phone number is the same format
+def translateNum(string):
+    if 'x' in string:
+        new_str = string.split('x')
+        return "".join(re.findall('\d+', new_str[0])) + 'x' + new_str[1]
+    else:
+        return "".join(re.findall('\d+', string))
+    
+
 
