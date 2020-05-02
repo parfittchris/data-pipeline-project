@@ -50,5 +50,4 @@ def getFiles(directory):
     return files
 
 startApp()
-# database.clearDB()
 
