@@ -60,12 +60,12 @@ def addListing(listing):
             current.status = listing['status']
             current.type = listing['type']
             current.description = listing['description']
-            current.agent_id = str(listing['agent_id'])
-            current.office_id = str(listing['office_id'])
+            current.agent_id = listing['agent_id']
+            current.office_id = listing['office_id']
         else:
             new_listing = Listings(address=listing['address'], city=listing['city'], state=listing['state'], zip=listing['zip'], mls_number=listing['mls_number'], price=listing['price'], status=listing['status'], type=listing['type'], description=listing['description'], agent_id= listing['agent_id'], office_id=listing['office_id'])
             db.session.add(new_listing)
-
+        
         db.session.commit()
         return
 

@@ -26,7 +26,11 @@ def startApp():
     while queue.length > 0:
         database.enterData(queue)
         print('Entering data...')
-        time.sleep(2)
+
+        # Code here to delay importing data from 
+        # the queue in order to not over load the db.
+
+        time.sleep(2) 
 
     print('Successful Import')
 
