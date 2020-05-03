@@ -19,6 +19,7 @@
   
   2) In terminal, type the following commands:
       * git clone https://github.com/parfittchris/data-pipeline-project.git
+      * cd data-pipeline-project
       * pipenv shell
       * pipenv install
       * python3 app.py
